@@ -45,5 +45,11 @@ RUN cd /tmp && \
 ENV PORT=8080
 EXPOSE 8080
 USER coder
+
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+ENV NVM_DIR=/home/coder/.nvm
+RUN . /home/coder/.nvm/nvm.sh \
+    && nvm install --lts
+
 WORKDIR /home/coder
 CMD sleep 5 && cat /home/coder/.config/code-server/config.yaml & /usr/local/bin/code-server --host 0.0.0.0 --port $PORT .
